@@ -6,6 +6,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.virarnd.expertcourseunscramble.game.GamePage
 
 @RunWith(AndroidJUnit4::class)
 class ScenarioTest {
@@ -17,7 +18,7 @@ class ScenarioTest {
 
     @Before
     fun setup() {
-        val gamePage = GamePage(scrambledWord = "cSarbmeldowdr")
+        gamePage = GamePage(scrambledWord = "cSarbmeldowdr", correctWord = "Scrambledword")
     }
 
     /**
@@ -29,20 +30,20 @@ class ScenarioTest {
 
         gamePage.assertInitialState("cSarbmeldowdr")
 
-        gamePage.letterTypde("S")
-        gamePage.assertWordUncompleted("S")
+        gamePage.typeLetter("S")
+        gamePage.assertWordUncompleted()
 
-        gamePage.letterTypde("c")
-        gamePage.assertWordUncompleted("Sc")
+        gamePage.typeLetter("c")
+        gamePage.assertWordUncompleted()
 
-        gamePage.letterTypde("rambledwor")
-        gamePage.assertWordUncompleted("Scrambledwor")
+        gamePage.typeLetter("rambledwor")
+        gamePage.assertWordUncompleted()
 
-        gamePage.letterTypde("d")
-        gamePage.assertWordCompleted("Scrambledword")
+        gamePage.typeLetter("d")
+        gamePage.assertWordCompleted()
 
         gamePage.clickCheck()
-        gamePage.assertCorrectWord("Scrambledword")
+        gamePage.assertCorrectWord()
 
         gamePage.clickNext()
         gamePage.assertInitialState("eNtxowdr")
@@ -58,23 +59,23 @@ class ScenarioTest {
 
         gamePage.assertInitialState("cSarbmeldowdr")
 
-        gamePage.letterTypde("S")
-        gamePage.assertWordUncompleted("S")
+        gamePage.typeLetter("S")
+        gamePage.assertWordUncompleted()
 
-        gamePage.letterTypde("rambledwodr")
-        gamePage.assertWordUncompleted("Scrambledwodr")
+        gamePage.typeLetter("rambledwodr")
+        gamePage.assertWordUncompleted()
 
         gamePage.clickCheck()
-        gamePage.assertErrorWord("Scrambledwodr")
+        gamePage.assertErrorWord()
 
         gamePage.deleteOneLetter()
-        gamePage.assertWordUncompleted("Scrambledwod")
+        gamePage.assertWordUncompleted()
 
-        gamePage.letterTypde("Q")
-        gamePage.assertWordCompleted("ScrambledwodQ")
+        gamePage.typeLetter("Q")
+        gamePage.assertWordCompleted()
 
         gamePage.clickCheck()
-        gamePage.assertErrorWord("ScrambledwodQ")
+        gamePage.assertErrorWord()
 
         gamePage.clickNext()
         gamePage.assertInitialState("eNtxowdr")
@@ -92,26 +93,26 @@ class ScenarioTest {
         gamePage.clickSkip()
         gamePage.assertInitialState("eNtxowdr")
 
-        gamePage.letterTypde("N")
-        gamePage.assertWordUncompleted("N")
+        gamePage.typeLetter("N")
+        gamePage.assertWordUncompleted()
 
         gamePage.clickSkip()
         gamePage.assertInitialState("eSocdnowdr")
 
-        gamePage.letterTypde("S")
-        gamePage.assertWordUncompleted("S")
+        gamePage.typeLetter("S")
+        gamePage.assertWordUncompleted()
 
-        gamePage.letterTypde("econdword")
-        gamePage.assertWordCompleted("Secondword")
-
-        gamePage.deleteOneLetter()
-        gamePage.assertWordUncompleted("Secondwor")
+        gamePage.typeLetter("econdword")
+        gamePage.assertWordCompleted()
 
         gamePage.deleteOneLetter()
-        gamePage.assertWordUncompleted("Secondwo")
+        gamePage.assertWordUncompleted()
 
-        gamePage.letterTypde("rd")
-        gamePage.assertWordCompleted("Secondword")
+        gamePage.deleteOneLetter()
+        gamePage.assertWordUncompleted()
+
+        gamePage.typeLetter("rd")
+        gamePage.assertWordCompleted()
 
         gamePage.clickSkip()
         gamePage.assertInitialState("hTriwdrod")
@@ -119,12 +120,10 @@ class ScenarioTest {
 
 }
 
-
 /*
 Scrambledword
 Nextword
 Secondword
 Thirdword
 Anotherword
-
 * */
