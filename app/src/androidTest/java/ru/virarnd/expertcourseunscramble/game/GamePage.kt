@@ -6,6 +6,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import org.hamcrest.Matcher
+import ru.virarnd.expertcourseunscramble.R
 
 class GamePage(scrambledWord: String, correctWord: String) {
 
@@ -17,35 +18,38 @@ class GamePage(scrambledWord: String, correctWord: String) {
         text = scrambledWord, containerIdMatcher = containerIdMatcher, containerClassTypeMatcher = containerClassTypeMatcher
     )
 
-    private val inputUi = InputFieldUi(
+    private val inputUi = InputUi(
         containerIdMatcher = containerIdMatcher, containerClassTypeMatcher = containerClassTypeMatcher
     )
 
     private val congratulationsUi = CongratulationsUi(
-        containerIdMatcher = containerIdMatcher, containerClassTypeMatcher = containerClassTypeMatcher
+        id = R.id.congratulations,
+        textResId = R.string.congratulationsText,
+        containerIdMatcher = containerIdMatcher,
+        containerClassTypeMatcher = containerClassTypeMatcher
     )
 
     private val checkUi = ButtonUi(
         id = R.id.checkButton,
         textResId = R.string.check,
-        isVisible = true,
-        isActive = true,
+//        isVisible = true,
+//        isActive = true,
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = containerClassTypeMatcher
     )
     private val skipUi = ButtonUi(
         id = R.id.skipButton,
         textResId = R.string.skip,
-        isVisible = true,
-        isActive = true,
+//        isVisible = true,
+//        isActive = true,
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = containerClassTypeMatcher
     )
     private val nextUi = ButtonUi(
         id = R.id.nextButton,
         textResId = R.string.next,
-        isVisible = true,
-        isActive = true,
+//        isVisible = true,
+//        isActive = true,
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = containerClassTypeMatcher
     )
@@ -71,12 +75,12 @@ class GamePage(scrambledWord: String, correctWord: String) {
     }
 
     fun typeLetter(letter: String) {
-        scrambledWordUi.typeLetter(letter)
+        inputUi.typeLetter(letter)
     }
 
     fun assertWordUncompleted() {
         scrambledWordUi.assertTextVisible()
-        inputUi.assertNotEnoughtChars()
+        inputUi.assertNotEnoughChars()
         congratulationsUi.assertNotVisible()
         checkUi.assertNotVisible()
         skipUi.assertIsVisible()
