@@ -10,7 +10,7 @@ import ru.virarnd.expertcourseunscramble.R
 
 class GamePage(scrambledWord: String, correctWord: String) {
 
-    private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.rootlayout))
+    private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.root_layout))
     private val containerClassTypeMatcher: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
 
 
@@ -24,7 +24,7 @@ class GamePage(scrambledWord: String, correctWord: String) {
 
     private val congratulationsUi = CongratulationsUi(
         id = R.id.congratulations,
-        textResId = R.string.congratulationsText,
+        textResId = R.string.congratulations_text,
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = containerClassTypeMatcher
     )
