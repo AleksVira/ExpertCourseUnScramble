@@ -50,7 +50,7 @@ class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matc
     fun assertInputInitialState() {
         layoutInteraction.check(matches(isEnabled()))
             .check(matches(TextInputLayoutErrorEnabledMatcher(false)))
-            .check(matches(TextInputLayoutHintEnabledMatcher(withText(R.string.hintText).toString())))
+            .check(matches(TextInputLayoutHintEnabledMatcher(withText(R.string.hint_text).toString())))
         inputInteraction.check(matches(withText("")))
 //            .check(matches(withHint(R.string.hintText)))
     }

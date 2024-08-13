@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">ExpertCourseUnScramble</string>
-    <string name="hintText">Type word here …</string>
+    <string name="hint_text">Type word here …</string>
+    <string name="congratulations_text">CONGRATULATIONS !!!</string>
+    <string name="error_incorrect_word">Word is incorrect!</string>
+    <string name="check">Check</string>
+    <string name="skip">Skip this word</string>
+    <string name="next">Next word</string>
 </resources>
