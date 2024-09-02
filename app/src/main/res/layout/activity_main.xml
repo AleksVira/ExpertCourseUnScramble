@@ -5,8 +5,8 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
     tools:context=".MainActivity">
 
     <Space
