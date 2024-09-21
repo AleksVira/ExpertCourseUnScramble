@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() {
 
 //            inputEditText.addTextChangedListener(watcher)
             inputEditText.addTextChangedListener { inputText ->
-                viewModel.handleInputText(text = inputText.toString()).update(binding = binding)
+                viewModel.handleInputText(text = inputText.toString())
+                    .update(binding = binding)
             }
         }
 
