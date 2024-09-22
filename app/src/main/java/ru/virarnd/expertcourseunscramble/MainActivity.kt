@@ -22,7 +22,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val viewModel = GameViewModel()
+        val viewModel = GameViewModel(object : GameRepository {
+            override fun wordAndVariant(): WordAndScrambledWord {
+                TODO("Not yet implemented")
+            }
+
+            override fun sameWord(userWord: String): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun completed(userWord: String): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun next() {
+                TODO("Not yet implemented")
+            }
+        })
+
         val uiState: GameUiState = viewModel.init()
 
         /*
@@ -44,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         uiState.update(binding = binding)
         with(binding) {
             checkButton.setOnClickListener {
-                viewModel.onCheck(text = inputEditText.text.toString()).update(binding = binding)
+                viewModel.onCheck(userText = inputEditText.text.toString()).update(binding = binding)
             }
             skipButton.setOnClickListener {
                 viewModel.onSkip().update(binding = binding)
@@ -55,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
 //            inputEditText.addTextChangedListener(watcher)
             inputEditText.addTextChangedListener { inputText ->
-                viewModel.handleInputText(text = inputText.toString())
+                viewModel.handleInputText(userText = inputText.toString())
                     .update(binding = binding)
             }
         }
