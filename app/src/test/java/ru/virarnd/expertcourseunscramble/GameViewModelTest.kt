@@ -21,31 +21,23 @@ class GameViewModelTest {
     fun caseNumber1() {
 
         var actual: GameUiState = viewModel.init()
-        var expected: GameUiState = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f1", scrambledWord = "1f"
-            )
-        )
+        var expected: GameUiState = GameUiState.Initial(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f")
-        expected = GameUiState.WordUncompleted(userText = "f")
+        expected = GameUiState.WordUncompleted(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f1")
-        expected = GameUiState.WordCompleted(userText = "f1")
+        expected = GameUiState.WordCompleted(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.onCheck(userText = "f1")
-        expected = GameUiState.CorrectWord(userText = "f1")
+        expected = GameUiState.CorrectWord(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.onNext()
-        expected = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f2", scrambledWord = "2f"
-            )
-        )
+        expected = GameUiState.Initial(scrambledWord = "2f")
         assertEquals(expected, actual)
     }
 
@@ -56,43 +48,35 @@ class GameViewModelTest {
     @Test
     fun caseNumber2() {
         var actual: GameUiState = viewModel.init()
-        var expected: GameUiState = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f1", scrambledWord = "1f"
-            )
-        )
+        var expected: GameUiState = GameUiState.Initial(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f")
-        expected = GameUiState.WordUncompleted(userText = "f")
+        expected = GameUiState.WordUncompleted(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f2")
-        expected = GameUiState.WordCompleted(userText = "f2")
+        expected = GameUiState.WordCompleted(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.onCheck(userText = "f2")
-        expected = GameUiState.ErrorWord(userText = "f2")
+        expected = GameUiState.ErrorWord(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f")
-        expected = GameUiState.WordUncompleted(userText = "f")
+        expected = GameUiState.WordUncompleted(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f3")
-        expected = GameUiState.WordCompleted(userText = "f3")
+        expected = GameUiState.WordCompleted(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.onCheck(userText = "f3")
-        expected = GameUiState.ErrorWord(userText = "f3")
+        expected = GameUiState.ErrorWord(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.onSkip()
-        expected = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f2", scrambledWord = "2f"
-            )
-        )
+        expected = GameUiState.Initial(scrambledWord = "2f")
         assertEquals(expected, actual)
 
     }
@@ -103,95 +87,64 @@ class GameViewModelTest {
     @Test
     fun caseNumber3() {
         var actual: GameUiState = viewModel.init()
-        var expected: GameUiState = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f1", scrambledWord = "1f"
-            )
-        )
+        var expected: GameUiState = GameUiState.Initial(scrambledWord = "1f")
         assertEquals(expected, actual)
 
         actual = viewModel.onSkip()
-        expected = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f2", scrambledWord = "2f"
-            )
-        )
+        expected = GameUiState.Initial(scrambledWord = "2f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f")
-        expected = GameUiState.WordUncompleted(userText = "f")
+        expected = GameUiState.WordUncompleted(scrambledWord = "2f")
         assertEquals(expected, actual)
 
         actual = viewModel.onSkip()
-        expected = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f3", scrambledWord = "3f"
-            )
-        )
+        expected = GameUiState.Initial(scrambledWord = "3f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f")
-        expected = GameUiState.WordUncompleted(userText = "f")
+        expected = GameUiState.WordUncompleted(scrambledWord = "3f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f3")
-        expected = GameUiState.WordCompleted(userText = "f3")
+        expected = GameUiState.WordCompleted(scrambledWord = "3f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f")
-        expected = GameUiState.WordUncompleted(userText = "f")
+        expected = GameUiState.WordUncompleted(scrambledWord = "3f")
         assertEquals(expected, actual)
 
         actual = viewModel.handleInputText(userText = "f3")
-        expected = GameUiState.WordCompleted(userText = "f3")
+        expected = GameUiState.WordCompleted(scrambledWord = "3f")
         assertEquals(expected, actual)
 
         actual = viewModel.onSkip()
-        expected = GameUiState.Initial(
-            WordAndScrambledWord(
-                correctWord = "f4", scrambledWord = "4f"
-            )
-        )
+        expected = GameUiState.Initial(scrambledWord = "4f")
         assertEquals(expected, actual)
     }
 }
 
 
+
 private class FakeRepository : GameRepository {
 
-    //    private val list = listOf("Nature", "Apartment", "Writing", "Homework", "Cabinet", "Revenue", "Concept", "Control", "Emotion", "Memory")
     private val list = listOf("f1", "f2", "f3", "f4", "f5", "f6")
 
     private var index: Int = 0
 
-    private var userWord: String = ""
+    override fun scrambledWord(): String = list[index].reversed()
 
-    override fun wordAndVariant() = WordAndScrambledWord(
-        correctWord = list[index], scrambledWord = list[index].reversed()
-    )
+    override fun currentWord(): String = list[index]
 
     override fun next() {
-        userWord = ""
         index++
         if (index == list.size) {
             index = 0
         }
     }
 
-    /*
-        override fun saveUserVariant(userWord: String) {
-            this.userWord = userWord
-        }
-
-        override fun getCorrectWord(): String {
-            return list[index]
-        }
-    */
-
     override fun completed(userWord: String): Boolean = userWord.length == list[index].length
 
-
     override fun sameWord(userWord: String): Boolean = list[index] == userWord
-
 
 }

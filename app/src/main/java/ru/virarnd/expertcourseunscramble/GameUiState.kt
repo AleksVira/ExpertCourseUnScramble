@@ -1,20 +1,75 @@
 package ru.virarnd.expertcourseunscramble
 
+import android.view.View
 import ru.virarnd.expertcourseunscramble.databinding.ActivityMainBinding
 
 interface GameUiState {
 
-    fun update(binding: ActivityMainBinding): Unit =
-        throw IllegalStateException("handle it!") //todo Remove it!
+    fun update(binding: ActivityMainBinding)
 
-    data class Initial(val wordAndScrambledWord: WordAndScrambledWord) : GameUiState
+    abstract class Abstract(
+        private val scrambledText: kotlin.String,
+        private val inputUiState: InputUiState,
+        private val skipVisibility: Int,
+        private val nextVisibility: Int,
+        private val congratulationsVisibility: Int,
+        private val checkUiState: CheckUiState
+    ) : GameUiState {
 
-    data class WordUncompleted(val userText: String) : GameUiState
+        override fun update(binding: ActivityMainBinding) = with(binding) {
+            scrambledWordTextView.text = scrambledText
+            inputUiState.update(this.inputLayout, this.inputEditText)
+            skipButton.visibility = skipVisibility
+            nextButton.visibility = nextVisibility
+            congratulations.visibility = congratulationsVisibility
+            checkUiState.update(checkButton)
+        }
+    }
 
-    data class WordCompleted(val userText: String) : GameUiState
+    data class Initial(private val scrambledWord: String) : Abstract(
+        scrambledText = scrambledWord,
+        inputUiState = InputUiState.Initial(scrambledWord.length),
+        skipVisibility = View.VISIBLE,
+        nextVisibility = View.GONE,
+        congratulationsVisibility = View.GONE,
+        checkUiState = CheckUiState.Invisible
+    )
 
-    data class CorrectWord(val userText: String) : GameUiState
+    data class WordUncompleted(val scrambledWord: String) : Abstract(
+        scrambledText = scrambledWord,
+        inputUiState = InputUiState.Uncompleted(scrambledWord.length),
+        skipVisibility = View.VISIBLE,
+        nextVisibility = View.GONE,
+        congratulationsVisibility = View.GONE,
+        checkUiState = CheckUiState.Invisible
+    )
 
-    data class ErrorWord(val userText: String) : GameUiState
+    data class WordCompleted(val scrambledWord: String) : Abstract(
+        scrambledText = scrambledWord,
+        inputUiState = InputUiState.Completed,
+        skipVisibility = View.VISIBLE,
+        nextVisibility = View.GONE,
+        congratulationsVisibility = View.GONE,
+        checkUiState = CheckUiState.Enabled
+    )
+
+    data class CorrectWord(val scrambledWord: String) : Abstract(
+        scrambledText = scrambledWord,
+        inputUiState = InputUiState.Completed,
+        skipVisibility = View.GONE,
+        nextVisibility = View.VISIBLE,
+        congratulationsVisibility = View.VISIBLE,
+        checkUiState = CheckUiState.Invisible
+    )
+
+    data class ErrorWord(val scrambledWord: String) : Abstract(
+        scrambledText = scrambledWord,
+        inputUiState = InputUiState.Incorrect,
+        skipVisibility = View.VISIBLE,
+        nextVisibility = View.GONE,
+        congratulationsVisibility = View.GONE,
+        checkUiState = CheckUiState.Disabled
+    )
 
 }
+

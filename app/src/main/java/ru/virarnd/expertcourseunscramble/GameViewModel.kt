@@ -3,14 +3,14 @@ package ru.virarnd.expertcourseunscramble
 class GameViewModel(private val repository: GameRepository) {
 
     fun init(): GameUiState {
-        return GameUiState.Initial(repository.wordAndVariant())
+        return GameUiState.Initial(repository.scrambledWord())
     }
 
     fun onCheck(userText: String): GameUiState {
         val isCorrectWord = repository.sameWord(userText)
         return when {
-            isCorrectWord -> GameUiState.CorrectWord(userText)
-            else -> GameUiState.ErrorWord(userText)
+            isCorrectWord -> GameUiState.CorrectWord(repository.scrambledWord())
+            else -> GameUiState.ErrorWord(repository.scrambledWord())
         }
     }
 
@@ -27,8 +27,8 @@ class GameViewModel(private val repository: GameRepository) {
     fun handleInputText(userText: String): GameUiState {
         val isCompleted = repository.completed(userText)
         return when {
-            isCompleted -> GameUiState.WordCompleted(userText)
-            else -> GameUiState.WordUncompleted(userText)
+            isCompleted -> GameUiState.WordCompleted(repository.scrambledWord())
+            else -> GameUiState.WordUncompleted(repository.scrambledWord())
         }
     }
 
