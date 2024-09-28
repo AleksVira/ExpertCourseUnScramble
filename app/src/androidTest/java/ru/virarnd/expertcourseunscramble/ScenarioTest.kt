@@ -18,7 +18,7 @@ class ScenarioTest {
 
     @Before
     fun setup() {
-        gamePage = GamePage(scrambledWord = "cSarbmeldowdr", correctWord = "Scrambledword")
+        gamePage = GamePage(scrambledWord = "erutaN", correctWord = "Nature")
     }
 
     /**
@@ -28,25 +28,26 @@ class ScenarioTest {
     @Test
     fun caseNumber1() {
 
-        gamePage.assertInitialState("cSarbmeldowdr")
+        gamePage.assertInitialState()
 
-        gamePage.typeLetter("S")
+        gamePage.typeLetter("N")
         gamePage.assertWordUncompleted()
 
-        gamePage.typeLetter("c")
+        gamePage.typeLetter("a")
         gamePage.assertWordUncompleted()
 
-        gamePage.typeLetter("rambledwor")
+        gamePage.typeLetter("tur")
         gamePage.assertWordUncompleted()
 
-        gamePage.typeLetter("d")
+        gamePage.typeLetter("e")
         gamePage.assertWordCompleted()
 
         gamePage.clickCheck()
         gamePage.assertCorrectWord()
 
         gamePage.clickNext()
-        gamePage.assertInitialState("eNtxowdr")
+        gamePage = GamePage(scrambledWord = "tnemtrapA", correctWord = "Apartment")
+        gamePage.assertInitialState()
 
     }
 
@@ -57,13 +58,13 @@ class ScenarioTest {
     @Test
     fun caseNumber2() {
 
-        gamePage.assertInitialState("cSarbmeldowdr")
+        gamePage.assertInitialState()
 
-        gamePage.typeLetter("S")
+        gamePage.typeLetter("N")
         gamePage.assertWordUncompleted()
 
-        gamePage.typeLetter("rambledwodr")
-        gamePage.assertWordUncompleted()
+        gamePage.typeLetter("atura")
+        gamePage.assertWordCompleted()
 
         gamePage.clickCheck()
         gamePage.assertErrorWord()
@@ -77,8 +78,9 @@ class ScenarioTest {
         gamePage.clickCheck()
         gamePage.assertErrorWord()
 
-        gamePage.clickNext()
-        gamePage.assertInitialState("eNtxowdr")
+        gamePage.clickSkip()
+        gamePage = GamePage(scrambledWord = "tnemtrapA", correctWord = "Apartment")
+        gamePage.assertInitialState()
     }
 
 
@@ -88,21 +90,23 @@ class ScenarioTest {
     @Test
     fun caseNumber3() {
 
-        gamePage.assertInitialState("cSarbmeldowdr")
+        gamePage.assertInitialState()
 
         gamePage.clickSkip()
-        gamePage.assertInitialState("eNtxowdr")
+        gamePage = GamePage(scrambledWord = "tnemtrapA", correctWord = "Apartment")
+        gamePage.assertInitialState()
 
-        gamePage.typeLetter("N")
+        gamePage.typeLetter("A")
         gamePage.assertWordUncompleted()
 
         gamePage.clickSkip()
-        gamePage.assertInitialState("eSocdnowdr")
+        gamePage = GamePage(scrambledWord = "gnitirW", correctWord = "Writing")
+        gamePage.assertInitialState()
 
-        gamePage.typeLetter("S")
+        gamePage.typeLetter("W")
         gamePage.assertWordUncompleted()
 
-        gamePage.typeLetter("econdword")
+        gamePage.typeLetter("riting")
         gamePage.assertWordCompleted()
 
         gamePage.deleteOneLetter()
@@ -111,11 +115,12 @@ class ScenarioTest {
         gamePage.deleteOneLetter()
         gamePage.assertWordUncompleted()
 
-        gamePage.typeLetter("rd")
+        gamePage.typeLetter("ng")
         gamePage.assertWordCompleted()
 
         gamePage.clickSkip()
-        gamePage.assertInitialState("hTriwdrod")
+        gamePage = GamePage(scrambledWord = "krowemoH", correctWord = "Homework")
+        gamePage.assertInitialState()
     }
 
 }

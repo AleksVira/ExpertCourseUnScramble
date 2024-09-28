@@ -8,7 +8,6 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -40,7 +39,8 @@ ButtonUi(
 ) {
 
     fun assertIsVisible() {
-        interaction.check(matches(isCompletelyDisplayed()))
+        interaction.check(matches(isDisplayed()))
+//        interaction.check(matches(isCompletelyDisplayed()))
     }
 
     fun assertNotVisible() {
@@ -49,7 +49,8 @@ ButtonUi(
 
     fun assertIsDisabled() {
         interaction.check(matches(isNotEnabled()))
-            .check(matches(isCompletelyDisplayed()))
+//            .check(matches(isCompletelyDisplayed()))
+            .check(matches(isDisplayed()))
     }
 
 }

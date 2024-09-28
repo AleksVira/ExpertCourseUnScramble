@@ -11,12 +11,11 @@ class TextInputLayoutHasErrorText(@StringRes private val errorResId: Int) :
     BoundedMatcher<View, TextInputLayout>(TextInputLayout::class.java) {
 
     override fun describeTo(description: Description) {
-        description.appendText("error enabled doesn't match with expected ${withText(errorResId)}")
+        description.appendText("error text doesn't match with expected ${withText(errorResId)}")
     }
 
     override fun matchesSafely(item: TextInputLayout): Boolean {
-        return item.error == withText(errorResId)
-//        return item.error == item.context.getString(errorResId)
+        return item.error == item.context.getString(errorResId)
     }
 
 }
