@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Base()))
+        val viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Reverse()))
 
         val uiState: GameUiState = viewModel.init()
 

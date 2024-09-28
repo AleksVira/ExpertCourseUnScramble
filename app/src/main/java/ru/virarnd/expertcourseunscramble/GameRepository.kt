@@ -17,6 +17,7 @@ interface GameRepository {
         private val originalList: List<String> = listOf(
             "Nature", "Apartment", "Writing", "Homework", "Cabinet", "Revenue", "Concept", "Control", "Emotion", "Memory"
         )
+//        private val originalList: List<String> = listOf("f1", "f2", "f3", "f4", "f5", "f6")
     ) : GameRepository {
 
         private var index: Int = 0

@@ -65,7 +65,7 @@ class GamePage(scrambledWord: String, correctWord: String) {
 6. CongratulationsMessage: invisible
 */
 
-    fun assertInitialState(s: String) {
+    fun assertInitialState() {
         scrambledWordUi.assertTextVisible()
         inputUi.assertInputInitialState()
         congratulationsUi.assertNotVisible()

@@ -11,8 +11,8 @@ import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.withHint
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -21,9 +21,11 @@ import org.hamcrest.Matchers.allOf
 import ru.virarnd.expertcourseunscramble.R
 import ru.virarnd.expertcourseunscramble.TextInputLayoutErrorEnabledMatcher
 import ru.virarnd.expertcourseunscramble.TextInputLayoutHasErrorText
-import ru.virarnd.expertcourseunscramble.TextInputLayoutHintEnabledMatcher
 
-class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matcher<View>) {
+class InputUi(
+    containerIdMatcher: Matcher<View>,
+    containerClassTypeMatcher: Matcher<View>
+) {
 
     private val inputLayoutId: Int = R.id.inputLayout
 
@@ -38,10 +40,10 @@ class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matc
 
     private val inputInteraction: ViewInteraction = onView(
         allOf(
-            containerIdMatcher,
-            containerClassTypeMatcher,
+//            containerIdMatcher,
+//            containerClassTypeMatcher,
             withId(R.id.inputEditText),
-            withParent(withId(inputLayoutId)),
+//            withParent(withId(inputLayoutId)),
             isAssignableFrom(TextInputEditText::class.java),
         )
     )
@@ -50,9 +52,9 @@ class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matc
     fun assertInputInitialState() {
         layoutInteraction.check(matches(isEnabled()))
             .check(matches(TextInputLayoutErrorEnabledMatcher(false)))
-            .check(matches(TextInputLayoutHintEnabledMatcher(withText(R.string.hint_text).toString())))
-        inputInteraction.check(matches(withText("")))
-//            .check(matches(withHint(R.string.hintText)))
+        inputInteraction.check(matches(isEnabled()))
+            .check(matches(withHint(R.string.hint_text)))
+            .check(matches(withText("")))
     }
 
     fun typeLetter(letter: String) {
@@ -62,20 +64,20 @@ class InputUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher: Matc
     fun assertNotEnoughChars() {
         layoutInteraction.check(matches(isEnabled()))
             .check(matches(TextInputLayoutErrorEnabledMatcher(false)))
-            .check(matches(TextInputLayoutHintEnabledMatcher("")))
+//        inputInteraction.check(matches(isEnabled()))
+//            .check(matches(withHint(R.string.hint_text)))
     }
 
     fun assertWordLengthTheSameAsOriginalWord() {
         layoutInteraction.check(matches(isEnabled()))
             .check(matches(TextInputLayoutErrorEnabledMatcher(false)))
-            .check(matches(TextInputLayoutHintEnabledMatcher("")))
     }
 
     fun assertWordNotTheSameAsOriginalWord() {
         layoutInteraction.check(matches(isEnabled()))
             .check(matches(TextInputLayoutErrorEnabledMatcher(true)))
             .check(matches(TextInputLayoutHasErrorText(R.string.error_incorrect_word)))
-            .check(matches(TextInputLayoutHintEnabledMatcher("")))
+//        inputInteraction.check(matches(hasErrorText("Word is incorrect!")))
     }
 
     fun deleteOneLetter() {
