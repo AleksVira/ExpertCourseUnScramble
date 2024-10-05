@@ -11,6 +11,7 @@ class GameViewModelTest {
     @Before
     fun setup() {
         viewModel = GameViewModel(repository = FakeRepository())
+//        viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Reverse()))
     }
 
     /**
