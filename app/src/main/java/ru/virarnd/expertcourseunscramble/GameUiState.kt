@@ -1,14 +1,15 @@
 package ru.virarnd.expertcourseunscramble
 
 import android.view.View
+import java.io.Serializable
 import ru.virarnd.expertcourseunscramble.databinding.ActivityMainBinding
 
-interface GameUiState {
+interface GameUiState : Serializable {
 
     fun update(binding: ActivityMainBinding)
 
     abstract class Abstract(
-        private val scrambledText: kotlin.String,
+        private val scrambledText: String,
         private val inputUiState: InputUiState,
         private val skipVisibility: Int,
         private val nextVisibility: Int,

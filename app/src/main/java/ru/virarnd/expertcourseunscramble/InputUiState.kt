@@ -2,15 +2,19 @@ package ru.virarnd.expertcourseunscramble
 
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.io.Serializable
 
-interface InputUiState {
+interface InputUiState : Serializable {
 
     fun update(inputLayout: TextInputLayout, inputEditText: TextInputEditText)
 
     abstract class Abstract(
         private val clearText: Boolean,
 //        private val hintIsVisible: Boolean,
-        private val errorIsVisible: Boolean, private val enabled: Boolean, private val counterEnabled: Boolean, private val maxCounter: Int
+        private val errorIsVisible: Boolean,
+        private val enabled: Boolean,
+        private val counterEnabled: Boolean,
+        private val maxCounter: Int
     ) : InputUiState {
         override fun update(inputLayout: TextInputLayout, inputEditText: TextInputEditText) {
             inputLayout.apply {
