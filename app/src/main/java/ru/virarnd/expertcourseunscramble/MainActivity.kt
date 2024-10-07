@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         viewModel = (application as UnscrambleApp).viewModel
-//        viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Reverse()))
         uiState = if (savedInstanceState == null) {
             viewModel.init()
         } else {

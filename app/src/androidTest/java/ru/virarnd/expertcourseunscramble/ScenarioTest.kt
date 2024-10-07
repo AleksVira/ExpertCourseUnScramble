@@ -1,5 +1,6 @@
 package ru.virarnd.expertcourseunscramble
 
+import android.content.Context
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.After
@@ -26,6 +27,7 @@ class ScenarioTest {
     @After
     fun reset() {
         activityScenarioRule.scenario.onActivity { activity: MainActivity ->
+            activity.getSharedPreferences(activity.getString(R.string.app_name), Context.MODE_PRIVATE).edit().clear().commit()
             activity.application.onCreate()
         }
     }

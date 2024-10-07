@@ -11,7 +11,6 @@ class GameViewModelTest {
     @Before
     fun setup() {
         viewModel = GameViewModel(repository = FakeRepository())
-//        viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Reverse()))
     }
 
     /**
@@ -142,6 +141,17 @@ private class FakeRepository : GameRepository {
         if (index == list.size) {
             index = 0
         }
+        input = ""
+    }
+
+    private var input: String = ""
+
+    override fun userInput(): String {
+        return input
+    }
+
+    override fun saveUserInput(value: String) {
+        input = value
     }
 
     override fun completed(userWord: String): Boolean = userWord.length == list[index].length

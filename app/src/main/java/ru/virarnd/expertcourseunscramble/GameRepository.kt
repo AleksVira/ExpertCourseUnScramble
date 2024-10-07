@@ -3,38 +3,46 @@ package ru.virarnd.expertcourseunscramble
 interface GameRepository {
 
     fun scrambledWord(): String
-
     fun currentWord(): String
-
     fun sameWord(userWord: String): Boolean
-
     fun completed(userWord: String): Boolean
-
     fun next()
+    fun userInput(): String
+    fun saveUserInput(value: String)
 
     class Base(
+        private val index: IntCache,
+        private val userInput: StringCache,
         private val shuffleStrategy: ShuffleStrategy = ShuffleStrategy.Reverse(),
         private val originalList: List<String> = listOf(
             "Nature", "Apartment", "Writing", "Homework", "Cabinet", "Revenue", "Concept", "Control", "Emotion", "Memory"
         )
-//        private val originalList: List<String> = listOf("f1", "f2", "f3", "f4", "f5", "f6")
     ) : GameRepository {
 
-        private var index: Int = 0
+        override fun scrambledWord(): String = shuffleStrategy.shuffle(originalList[index.read()])
 
-        override fun scrambledWord(): String = shuffleStrategy.shuffle(originalList[index])
+        override fun currentWord(): String = originalList[index.read()]
 
-        override fun currentWord(): String = originalList[index]
+        override fun sameWord(userWord: String): Boolean = originalList[index.read()] == userWord
 
-        override fun sameWord(userWord: String): Boolean = originalList[index] == userWord
-
-        override fun completed(userWord: String): Boolean = userWord.length == originalList[index].length
+        override fun completed(userWord: String): Boolean = userWord.length == originalList[index.read()].length
 
         override fun next() {
-            index++
-            if (index == originalList.size) {
-                index = 0
+            val value = index.read()
+            if (value + 1 == originalList.size) {
+                index.save(0)
+            } else {
+                index.save(value + 1)
             }
+            userInput.save("")
+        }
+
+        override fun userInput(): String {
+            return userInput.read()
+        }
+
+        override fun saveUserInput(value: String) {
+            userInput.save(value)
         }
     }
 }
