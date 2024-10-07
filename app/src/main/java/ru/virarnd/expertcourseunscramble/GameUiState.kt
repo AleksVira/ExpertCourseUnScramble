@@ -27,13 +27,13 @@ interface GameUiState : Serializable {
         }
     }
 
-    data class Initial(private val scrambledWord: String) : Abstract(
+    data class Initial(private val scrambledWord: String, val userInput: String = "") : Abstract(
         scrambledText = scrambledWord,
-        inputUiState = InputUiState.Initial(scrambledWord.length),
+        inputUiState = InputUiState.Initial(userInput, scrambledWord.length),
         skipVisibility = View.VISIBLE,
         nextVisibility = View.GONE,
         congratulationsVisibility = View.GONE,
-        checkUiState = CheckUiState.Invisible
+        checkUiState = if (scrambledWord.length == userInput.length) CheckUiState.Enabled else CheckUiState.Invisible
     )
 
     data class WordUncompleted(val scrambledWord: String) : Abstract(

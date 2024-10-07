@@ -9,7 +9,8 @@ interface InputUiState : Serializable {
     fun update(inputLayout: TextInputLayout, inputEditText: TextInputEditText)
 
     abstract class Abstract(
-        private val clearText: Boolean,
+//        private val clearText: Boolean,
+//        private val userInput: String,
 //        private val hintIsVisible: Boolean,
         private val errorIsVisible: Boolean,
         private val enabled: Boolean,
@@ -26,25 +27,30 @@ interface InputUiState : Serializable {
                 isCounterEnabled = counterEnabled
                 counterMaxLength = maxCounter
             }
-            if (clearText) {
-                inputEditText.text?.clear()
-            }
+//            if (clearText) {
+//                inputEditText.text?.clear()
+//            }
         }
     }
 
-    data class Initial(val length: Int) : Abstract(
-        clearText = true, errorIsVisible = false, enabled = true, counterEnabled = true, maxCounter = length
-    )
+    data class Initial(val userInput: String, val length: Int) : Abstract(
+        errorIsVisible = false, enabled = true, counterEnabled = true, maxCounter = length
+    ) {
+        override fun update(inputLayout: TextInputLayout, inputEditText: TextInputEditText) {
+            super.update(inputLayout, inputEditText)
+            inputEditText.setText(userInput)
+        }
+    }
 
     data class Uncompleted(val length: Int) : Abstract(
-        clearText = false, errorIsVisible = false, enabled = true, counterEnabled = true, maxCounter = length
+        errorIsVisible = false, enabled = true, counterEnabled = true, maxCounter = length
     )
 
     object Completed : Abstract(
-        clearText = false, errorIsVisible = false, enabled = true, counterEnabled = false, maxCounter = 0
+        errorIsVisible = false, enabled = true, counterEnabled = false, maxCounter = 0
     )
 
-    object Incorrect : Abstract(clearText = false, errorIsVisible = true, enabled = true, counterEnabled = false, maxCounter = 0)
+    object Incorrect : Abstract(errorIsVisible = true, enabled = true, counterEnabled = false, maxCounter = 0)
 
 
 }

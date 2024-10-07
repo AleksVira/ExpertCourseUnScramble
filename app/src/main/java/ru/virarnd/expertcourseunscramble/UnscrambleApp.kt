@@ -1,6 +1,7 @@
 package ru.virarnd.expertcourseunscramble
 
 import android.app.Application
+import android.content.Context
 
 class UnscrambleApp : Application() {
 
@@ -8,6 +9,13 @@ class UnscrambleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        viewModel = GameViewModel(GameRepository.Base(ShuffleStrategy.Reverse()))
+        val sharedPref = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+        viewModel = GameViewModel(
+            GameRepository.Base(
+                IntCache.Base(sharedPref, "indexKey", 0),
+                StringCache.Base(sharedPref, "userInputKey", ""),
+                ShuffleStrategy.Reverse()
+            )
+        )
     }
 }
